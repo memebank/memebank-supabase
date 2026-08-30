@@ -1,0 +1,16 @@
+{
+  "$schema": "./schemas/catalog.schema.json",
+  "version": 1,
+  "github": {
+    "organization": "memebank",
+    "repository": "memebank/memebank-supabase",
+    "defaultBranch": "main"
+  },
+  "supabaseOrganization": {
+    "id": "dfxthuvsmltdlubdmgxm",
+    "name": "memebank"
+  },
+  "canonicalProjectRef": null,
+  "projects": []
+}
+
