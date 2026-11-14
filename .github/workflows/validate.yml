@@ -12,6 +12,7 @@ permissions:
 jobs:
   catalog-and-layout:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -21,5 +22,5 @@ jobs:
           node-version: '22'
       - name: Install pinned validation dependencies
         run: npm ci --ignore-scripts
-      - name: Validate JSON Schema, catalog, targets, paths, and secret boundaries
-        run: npm run validate
+      - name: Test symlink path guard and validate contract catalog
+        run: npm test
