@@ -4,6 +4,7 @@ import { dirname, join, normalize, relative, resolve, sep } from 'node:path';
 import process from 'node:process';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
+import { hasSymlinkComponent } from './path-safety.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 const errors = [];
@@ -47,6 +48,15 @@ function assertContained(relativePath, label) {
   const rel = relative(root, candidate);
   if (rel.startsWith(`..${sep}`) || rel === '..') {
     fail(`${label}: path escapes repository root`);
+    return null;
+  }
+  try {
+    if (hasSymlinkComponent(root, candidate)) {
+      fail(`${label}: symlinked paths are forbidden`);
+      return null;
+    }
+  } catch (error) {
+    fail(`${label}: cannot inspect path components: ${error.message}`);
     return null;
   }
   return candidate;
